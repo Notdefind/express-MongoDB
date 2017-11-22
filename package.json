@@ -1,0 +1,30 @@
+{
+  "name": "express-mongodb",
+  "version": "1.0.0",
+  "description": "this is a test for express-mongodb",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon lib/index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "service": "NODE_ENV=production npm start",
+    "build": "babel lib -d dist",
+    "serve": "node dist/index.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "wangkang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.12.1"
+  }
+}

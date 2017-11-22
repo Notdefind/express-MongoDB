@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>express mongodn dome</title>
+   </head>
+   <style>
+       body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+        }
+
+        p {
+            margin: 8px 0 0 0;
+        }
+
+        .container p {
+            text-align: center;
+            padding: 0;
+        }
+
+        /****** Logo Div Styling ******/
+
+        img {
+            margin: 20px auto 0 auto;
+            display: block;
+        }
+
+        .clementine-text { /* Styling for the Clementine.js text */
+            padding: 0;
+            margin: -25px 0 0 0;
+            font-weight: 500;
+            font-size: 60px;
+            color: #FFA000;
+        }
+
+        /****** Click Styling ******/
+
+        .btn-container {    /* Styling for the div that contains the buttons */
+            margin: -10px auto 0 auto;
+            text-align: center;
+        }
+
+        .btn {  /* Styling for buttons */
+            margin: 0 8px;
+            color: white;
+            background-color: #00BCD4;
+            display: inline-block;
+            border: 0;
+            font-size: 14px;
+            border-radius: 3px;
+            padding: 10px 5px;
+            width: 100px;
+            font-weight: 500;
+        }
+
+        .btn:focus {    /* Remove outline when hovering over button */
+            outline: none;
+        }
+
+        .btn:active {   /* Scale the button down by 10% when clicking on button */
+            transform: scale(0.9, 0.9);
+            -webkit-transform: scale(0.9, 0.9);
+            -moz-transform: scale(0.9, 0.9);
+        }
+
+        .btn-delete {   /* Styling for delete button */
+            background-color: #ECEFF1;
+            color: #212121;
+        }
+        .count::before{
+            content: '总点击次数:'
+        }
+   </style>
+   <body>
+
+    <div class="container">
+        <p class="clementine-text">Clementine.js</p>
+    </div>
+
+    <div class="container">
+        <p>You have clicked the button <span id="click-nbr"></span> times.</p>
+        <p>点击总次数<span id="count"></span></p>
+        <br />
+        <div class="btn-container">
+        
+        <button type="submit" class="btn btn-add">CLICK ME!</button>
+        <button class="btn btn-delete">RESET</button>
+        </div>
+    </div>
+
+   </body>
+   <script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
+   <script>
+       $(function() {
+           var $count = $('#count');
+
+            $.ajax({
+                url: '/api/clicks',
+                type: 'get',
+                success: function (data) {
+                    $count.html(data.clicks)
+                }
+            })
+
+            $('.btn-add').click(function() {
+                $.ajax({
+                    url: '/api/clicks',
+                    type: 'post',
+                    success: function (data) {
+                        $count.html(data)
+                    }
+                })
+            })
+            $('.btn-delete').click(function() {
+                $.ajax({
+                    url: '/api/clicks',
+                    type: 'delete',
+                    success: function (data) {
+                        $count.html(data)
+                    }
+                })
+            })
+       })
+   </script>
+</html>
