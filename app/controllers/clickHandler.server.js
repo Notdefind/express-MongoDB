@@ -5,7 +5,7 @@ function clickHandler (db) {
     this.getClicks = (req, res) => {
         
         var clickProjection = { '_id': false };
-    
+        console.log(clicks.find())
         clicks.findOne({}, clickProjection, function (err, result) {
             if (err) {
                 throw err;

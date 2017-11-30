@@ -1,16 +1,17 @@
-import ClickHandler from '../controllers/clickHandler.server';
+import userPage from './page/user'
+
+import userServer from './server/user'
+import clickHandler from './server/clickHandler'
 
 const routes = (app, db) => {
-    const clickHandler = new ClickHandler(db);
-    app.route('/')
-    .get(function (req, res) {
-        res.sendFile(process.cwd() + '/public/index.html');
-    });
+    
+    // page
+    userPage(app)
+    // server
+    clickHandler(app, db)
 
-    app.route('/api/clicks')
-    .get(clickHandler.getClicks)
-    .post(clickHandler.addClick)
-    .delete(clickHandler.resetClicks);
+    userServer(app, db)
+    
 };
 
 export default routes;
