@@ -1,15 +1,32 @@
 import url from 'url';
 import api from '../../services/api'
+import { isVaildUserName, isVaildPassword } from "../../utils";
 
 function userServer (db) { 
   const user = db.collection('user');
 
   this.create = async (req, res) => {
     const params = req.query;
-    const { userName, password } = params;
+    const userName = params.userName.trim();
+    const password = params.password.trim();
 
     if (!userName || !password) {
       const data = api.err("缺少参数");
+
+      res.json(data);
+      return false;
+    }
+
+    if (isVaildUserName(userName)) {
+      const data = api.err("用户名格式不正确");
+
+      res.json(data);
+
+      return false;
+    }
+
+    if (isVaildPassword(password)) {
+      const data = api.err("密码格式不正确");
 
       res.json(data);
       return false;
@@ -35,15 +52,21 @@ function userServer (db) {
     const { userName, password } = params;
     const hasUserName = await user.findOne({userName})
 
+    if (isVaildUserName(userName)) {
+      const data = api.err("用户名格式不正确");
+
+      res.json(data);
+
+      return false;
+    }
+
     if(hasUserName) {
       const updateUser = await user.update({userName},{$set: {password}})
       const data = api.success("更新成功");
 
       res.json(data);
     } else {
-      const data = api.success("用户名不存在");
-
-      res.json(data);
+      userNotFind(res);
     } 
   }
 
@@ -69,20 +92,42 @@ function userServer (db) {
     const { userName } = params;
     const hasUserName = await user.findOne({userName})
 
+    if (isVaildUserName(userName)) {
+      const data = api.err("用户名格式不正确");
+
+      res.json(data);
+
+      return false;
+    }
+
     if (hasUserName) {
       const userList = await user.remove({userName});
       const data = api.success("单个删除成功");
 
       res.json(data);
     } else {
-      const data = api.err("单个删除成功");
-
-      res.json(data);
+      userNotFind(res);
     }
     
   };
 
 }
-  
+
+function userNotFind(res) {
+  const data = api.err("用户名不存在");
+
+  res.json(data);
+}
+
+function vaildUserName(userName, res) {
+  if (isVaildUserName(userName)) {
+    const data = api.err("用户名格式不正确");
+
+    res.json(data);
+
+    return false
+  }
+}
+
 export default userServer;
   
