@@ -2,13 +2,13 @@
   "name": "express-mongodb",
   "version": "1.0.0",
   "description": "this is a test for express-mongodb",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node",
+    "start": "nodemon app.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "service": "NODE_ENV=production npm start",
     "build": "babel lib -d dist",
-    "serve": "node dist/index.js"
+    "serve": "node app.js"
   },
   "keywords": [
     "node",
