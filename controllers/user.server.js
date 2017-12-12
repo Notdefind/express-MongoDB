@@ -5,20 +5,17 @@ import { isVaildUserName, isVaildPassword } from "../utils";
 
 class userServer {
   constructor () {
-    this.create = () => this.create.bind(this)
-    this.userList = () => this.userList.bind(this)
-    this.update = () => this.update.bind(this)
-    this.deleteAll = () => this.deleteAll.bind(this)
-    this.deleteOne = () => this.deleteOne.bind(this)
+    this.create = this.create.bind(this)
+    this.userList = this.userList.bind(this)
+    this.update = this.update.bind(this)
+    this.deleteAll = this.deleteAll.bind(this)
+    this.deleteOne = this.deleteOne.bind(this)
   }
 
   async create(req, res) {
-    console.log('xxx')
-    res.send('xxx')
-    return false;
     const params = req.query;
-    const userName = params.userName.trim();
-    const password = params.password.trim();
+    const userName = params.userName;
+    const password = params.password;
 
     if (!userName || !password) {
       const data = restful.err("缺少参数");

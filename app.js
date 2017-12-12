@@ -4,18 +4,18 @@ import history from 'connect-history-api-fallback';
 
 import routes from './routes'
 
-
 const mongo = require('mongodb').MongoClient;
 const app = express();
 const url = 'mongodb://localhost:27017/clementinejs'
 
+routes(app);
 
 app.get('env') === 'production'
 app.use(history());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 
-routes(app);
+
 
 mongo.connect(url, function (err, db) {
     
