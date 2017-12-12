@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
+import history from 'connect-history-api-fallback';
 
 import routes from './routes'
 
@@ -10,10 +11,12 @@ const url = 'mongodb://localhost:27017/clementinejs'
 
 
 app.get('env') === 'production'
-app.use('/public', express.static('public'));
-app.use('/controllers', express.static('/controllers'));
+app.use(history());
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
+
 routes(app);
+
 mongo.connect(url, function (err, db) {
     
     if (err) {
