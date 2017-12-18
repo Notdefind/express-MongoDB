@@ -1,7 +1,6 @@
 import url from 'url';
 import restful from '../services/restful'
 import { isVaildUserName, isVaildPassword } from "../utils";
-import db from '../config/db'
 
 class userServer {
   constructor () {
@@ -77,7 +76,7 @@ class userServer {
   }
 
   async userList(req, res) {
-    db.query({
+    query({
       sql: 'SELECT * FROM `topics`',
     }, function (error, results, fields) {
       console.log(JSON.stringify(results))

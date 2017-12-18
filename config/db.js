@@ -7,15 +7,22 @@ const pool = mysql.createPool({
   port: '3306',
   database: 'test'
 });
-const db = { query }
 
-function query(sql, callback) {
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, function (err, rows) {
-      callback(err, rows);
-      connection.release();
-    });
-  });
+export default (sql, values) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        reject(err)
+      } else {
+        connection.query(sql, values, (err, rows) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(rows)
+          }
+          connection.release()
+        })
+      }
+    })
+  })
 }
-
-export default db;
