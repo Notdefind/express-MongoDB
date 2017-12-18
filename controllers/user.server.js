@@ -1,7 +1,7 @@
 import url from 'url';
 import restful from '../services/restful'
 import { isVaildUserName, isVaildPassword } from "../utils";
-
+import db from '../config/db'
 
 class userServer {
   constructor () {
@@ -53,7 +53,7 @@ class userServer {
     }
   }
 
-  async update () {
+  async update (res, re) {
     const params = req.query;
     const { userName, password } = params;
     const hasUserName = await user.findOne({ userName })
@@ -76,13 +76,12 @@ class userServer {
     } 
   }
 
-  async userList () {
-    const userList = await user.find();
-
-    userList.toArray((err, result) => {
-      const data = restful.success("成功", result);
-
-      res.json(data);
+  async userList(req, res) {
+    db.query({
+      sql: 'SELECT * FROM `topics`',
+    }, function (error, results, fields) {
+      console.log(JSON.stringify(results))
+      res.json(results)
     });
   }
 
